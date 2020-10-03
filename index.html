@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="app.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <title>Vue.js Pet Depot</title>
+</head>
+<body>
+<div id="main">
+    <header>
+        <div class="navbar navbar-default">
+            <h1>{{ sitename }}</h1>
+        </div>
+        <div class="nav navbar-nav navbar-right cart">
+            <button type="button" class="btn btn-default btn-lg"
+                    v-on:click="showCheckout">
+                <span class="glyphicon glyphicon-shopping-cart">
+                {{ cartItemCount }}
+            </span>
+                Checkout
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="row product">
+            <div v-if="showProduct">
+                <div class="col">
+                    <figure>
+                        <img v-bind:src="product.image" alt="image">
+                    </figure>
+                </div>
+                <div class="col col-expand">
+                    <h1>{{ product.title }}</h1>
+                    <p v-html="product.description"></p>
+                    <p class="price">
+                        {{ product.price | formatPrice }}
+                    </p>
+                    <button class="default"
+                            v-on:click="addToCart"
+                            v-if="canAddToCart">Add to cart
+                    </button>
+                    <button disabled
+                            v-else
+                    >Add to cart
+                    </button>
+                </div>
+            </div>
+            <div v-else>
+                <div class="col-md-6">
+                    <strong>First Name:</strong>
+                    <input v-model="order.firstName" type="text" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <strong>Last Name:</strong>
+                    <input v-model="order.lastName" type="text" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12"><strong>Address:</strong></div>
+                    <div class="col-md-12">
+                        <input v-model="order.address"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12"><strong>City:</strong></div>
+                    <div class="col-md-12">
+                        <input v-model="order.city"
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <strong>State:</strong>
+                        <select v-model="order.state"
+                                class="form-control">
+                            <option disabled value="">State</option>
+                            <option>AL</option>
+                            <option>AR</option>
+                            <option>CA</option>
+                            <option>NV</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <strong>Zip / Postal Code:</strong>
+                        <input v-model="order.zip"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 boxes">
+                        <input type="checkbox"
+                               id="gift"
+                               value="true"
+                               v-model="order.gift">
+                        <label for="gift">Ship As Gift?</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 boxes">
+                        <input type="radio"
+                               id="home"
+                               value="Home"
+                               v-model="order.method">
+                        <label for="home">Home</label>
+                        <input type="radio"
+                               id="business"
+                               value="Business"
+                               v-model="order.method">
+                        <label for="business">Business</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <button type="submit"
+                                class="btn btn-primary submit"
+                                v-on:click="submitForm">Place Order</button>
+                    </div>
+                </div>
+                <div class="col-md-12 verify">
+                    <pre>
+                        First name: {{order.firstName }}
+                        Last name: {{order.lastName }}
+                        Address name: {{order.address }}
+                        City name: {{order.city }}
+                        Zip name: {{order.zip }}
+                        State name: {{order.state }}
+                        Method: {{order.method }}
+                        Gift: {{order.gift }}
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
