@@ -13,10 +13,7 @@
 <body>
 <div id="main">
     <header>
-        <div class="navbar navbar-default">
-            <h1>{{ sitename }}</h1>
-        </div>
-        <div class="nav navbar-nav navbar-right cart">
+        <div class="nav text-right cart">
             <button type="button" class="btn btn-default btn-lg"
                     v-on:click="showCheckout">
                 <span class="glyphicon glyphicon-shopping-cart">
@@ -25,6 +22,10 @@
                 Checkout
             </button>
         </div>
+        <div class="navbar navbar-default">
+            <h1>{{ sitename }}</h1>
+        </div>
+
     </header>
     <main>
         <div class="row product">
@@ -93,15 +94,7 @@
                                class="form-control">
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-6 boxes">
-                        <input type="checkbox"
-                               id="gift"
-                               value="true"
-                               v-model="order.gift">
-                        <label for="gift">Ship As Gift?</label>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class="col-md-6 boxes">
                         <input type="radio"
@@ -121,6 +114,16 @@
                         <button type="submit"
                                 class="btn btn-primary submit"
                                 v-on:click="submitForm">Place Order</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6 boxes">
+                        <input type="checkbox" id="gift" value="true"
+                        v-bind:true-value="order.sendGift"
+                        v-bind:false-value="order.dontSendGift"
+                               v-model="order.gift"
+                        >
+                        <label for="gift">Ship As Gift</label>
                     </div>
                 </div>
                 <div class="col-md-12 verify">

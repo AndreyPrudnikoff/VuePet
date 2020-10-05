@@ -19,8 +19,10 @@ let webstore = new Vue({
             city: '',
             zip: '',
             state: '',
-            method: 'Home',
-            gift: false
+            method: 'Business',
+            gift: 'Send As Gift',
+            sendGift: 'Send As Gift',
+            dontSendGift: 'Do Not Send As Gift'
         },
         cart: []
     },
