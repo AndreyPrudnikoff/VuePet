@@ -1,9 +1,26 @@
 body {
     padding: 20px 10%;
 }
+*, *:before, *:after {
+    box-sizing: border-box;
+}
 img {
-    height: 500px;
+    height: 300px;
 }
 .navbar {
     margin-top: 20px;
+}
+.inventory-message {
+    color: red;
+    font: 20pt 'Trebuchet MS';
+    font-weight: bold;
+}
+.rating span {
+    font-size: 36px;
+    position: relative;
+}
+.rating-active:before {
+    content: "\2605";
+    position: absolute;
+    color: green;
 }

@@ -2,15 +2,6 @@ let webstore = new Vue({
     el: '#main',
     data: {
         sitename: 'Vue.js Pet Depot',
-        product: {
-            id: 1001,
-            title: "Cat Food, 25lb bag",
-            description: "A 25 pound bag of <em>irresistible</em>," +
-                "organic goodness for your cat.",
-            price: 200000,
-            image: "./images/product-fullsize.jpg",
-            availaЬleinventory: 5
-        },
         showProduct: true,
         order: {
             firstName: '',
@@ -23,6 +14,13 @@ let webstore = new Vue({
             gift: 'Send As Gift',
             sendGift: 'Send As Gift',
             dontSendGift: 'Do Not Send As Gift'
+        },
+        products: [],
+        states: {
+            AL: 'Alabama',
+            AR: 'Arizona',
+            CA: 'California',
+            NV: 'Nevada'
         },
         cart: []
     },
@@ -45,23 +43,54 @@ let webstore = new Vue({
             }
         }
     },
+    created: function () {
+        axios.get('./products.json')
+            .then((response) => {
+                this.products = response.data.products
+            })
+    },
     methods: {
-        addToCart: function () {
-            this.cart.push(this.product.id)
+        addToCart(aProduct) {
+            this.cart.push(aProduct.id)
         },
         showCheckout() {
             this.showProduct = this.showProduct ? false : true
         },
         submitForm() {
             alert('Submitted')
+        },
+        checkRating(n, myProduct) {
+            return myProduct.rating - n >= 0
+        },
+        canAddToCart(aProduct) {
+            return aProduct.availaЬleinventory > this.cartCount(aProduct.id)
+        },
+        cartCount(id) {
+            let count = 0
+            for (let i = 0; i < this.cart.length; i++) {
+                if (this.cart[i] === id) {
+                    count++
+                }
+            }
+            return count
         }
     },
     computed: {
         cartItemCount: function () {
             return this.cart.length || ''
         },
-        canAddToCart: function () {
-            return this.product.availaЬleinventory > this.cartItemCount
+        sortedProducts() {
+            if (this.products.length > 0) {
+                let productsArray = this. products.slice(0)
+                function compare(a, b) {
+                    if (a.title.toLowerCase() < b.title.toLowerCase())
+                        return -1
+                    if (a.title.toLowerCase() > b.title.toLowerCase())
+                        return 1
+                    return 0
+                }
+                return productsArray.sort(compare)
+            }
         }
     }
 })
